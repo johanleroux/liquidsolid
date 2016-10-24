@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('title', 'Login')
-  
+
 @section('content')
   <section id="form">
     <div class="container">
@@ -10,8 +10,18 @@
             <h2>Login to your account</h2>
             <form role="form" method="POST" action="{{ url('/login') }}">
               {{ csrf_field() }}
-              <input type="email" placeholder="Email Address" />
-              <input type="password" placeholder="Password" />
+              <input type="email" name="email" placeholder="Email Address" />
+              @if ($errors->has('email'))
+                  <span class="help-block">
+                      <strong>{{ $errors->first('email') }}</strong>
+                  </span>
+              @endif
+              <input type="password" name="password" placeholder="Password" />
+              @if ($errors->has('password'))
+                  <span class="help-block">
+                      <strong>{{ $errors->first('password') }}</strong>
+                  </span>
+              @endif
               <span>
                 <input type="checkbox" class="checkbox">
                 Keep me signed in
