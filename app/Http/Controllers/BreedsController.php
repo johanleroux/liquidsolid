@@ -15,8 +15,10 @@ class BreedsController extends Controller
   */
   public function index()
   {
-    $breeds = Breed::orderBy('name', 'asc')->paginate(9);
-    return view('breed.index', compact('breeds'));
+    $breeds_sorted = Breed::orderBy('name', 'asc')->paginate(15);
+    $breeds = Breed::orderByAds()->take(5)->get();
+
+    return view('breed.index', compact('breeds_sorted', 'breeds'));
   }
 
   /**

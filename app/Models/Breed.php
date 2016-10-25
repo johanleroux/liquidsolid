@@ -34,4 +34,12 @@ class Breed extends Model
   {
     return $this->hasMany('App\Models\Ad');
   }
+
+  public function scopeOrderByAds($query)
+  {
+    $query->leftJoin('ads', 'ads.breed_id', '=', 'breeds.id')
+    ->selectRaw('breeds.*, count(ads.id) as ads_count')
+    ->groupBy('breeds.id')
+    ->orderBy('ads_count', 'desc');
+  }
 }

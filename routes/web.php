@@ -1,8 +1,10 @@
 <?php
 
 Route::get('/', function () {
-  $ads = \App\Models\Ad::inRandomOrder()->take(9)->get();
-  return view('welcome', compact('ads'));
+  $breeds = \App\Models\Breed::orderByAds()->take(5)->get();
+  $ads = \App\Models\Ad::inRandomOrder()->take(15)->get();
+
+  return view('welcome', compact('ads', 'breeds'));
 });
 
 Auth::routes();

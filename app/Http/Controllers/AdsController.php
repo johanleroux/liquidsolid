@@ -27,10 +27,11 @@ class AdsController extends Controller
   {
     $breed_id = $request->query('breed_id');
 
-    $ads = Ad::where('breed_id', 'like', '%'.$breed_id.'%')->orderBy('created_at', 'desc')->paginate(9);
+    $ads = Ad::where('breed_id', 'like', '%'.$breed_id.'%')->orderBy('created_at', 'desc')->paginate(15);
+    $breeds = Breed::orderByAds()->take(5)->get();
 
     $ads->setPath('ad?breed_id='.$breed_id);
-    return view('ad.index', compact('ads'));
+    return view('ad.index', compact('ads', 'breeds'));
   }
 
   /**
