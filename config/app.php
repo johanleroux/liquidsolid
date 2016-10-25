@@ -169,6 +169,7 @@ return [
   Barryvdh\DomPDF\ServiceProvider::class,
   Codecourse\Notify\NotifyServiceProvider::class,
   Collective\Html\HtmlServiceProvider::class,
+  Cmgmyr\Messenger\MessengerServiceProvider::class,
 
   /*
   * Application Service Providers...

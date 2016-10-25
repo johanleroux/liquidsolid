@@ -76,6 +76,7 @@
                 <li><a href="{{ action('BreedsController@index') }}">Breeds</a></li>
                 @if(Auth::user())
                   <li><a href="{{ action('AdsController@create') }}">Post Ad</a></li>
+                  <li><a href="{{ action('MessagesController@index') }}">Messages</a></li>
                 @endif
               </ul>
             </div>

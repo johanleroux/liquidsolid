@@ -1382,7 +1382,7 @@ overflow: hidden;
   width: 100%;
 }
 
-#reviews button {
+#reviews input[type=submit] {
   background: #FE980F;
   border: 0 none;
   border-radius: 0;

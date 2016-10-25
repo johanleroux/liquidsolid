@@ -108,21 +108,21 @@
               <div class="tab-pane fade" id="reviews">
                 <div class="col-sm-12">
                   <p><b>Write The Breeder</b></p>
-                  <form action="#">
-                    <span>
-                      <input type="text" placeholder="Subject">
-                    </span>
-                    <textarea name="" placeholder="Message"></textarea>
-                    @if(Auth::user())
-                      @if(Auth::user()->id == $ad->user->id)
-                        <button type="button" class="btn btn-default pull-right" disabled="true">Send Message</button>
-                      @else
-                        <button type="button" class="btn btn-default pull-right">Send Message</button>
-                      @endif
+                  {!! Form::open(['action' => 'MessagesController@store']) !!}
+                  {!! Form::hidden('recipient', $ad->user->id) !!}
+                  <span>{!! Form::text('subject', null, ['placeholder' => 'Subject']) !!}</span>
+                  {!! Form::textarea('message', null, ['placeholder' => 'Message']) !!}
+
+                  @if(Auth::user())
+                    @if(Auth::user()->id == $ad->user->id)
+                      {!! Form::submit('Send Message', ['class' => 'btn btn-default pull-right', 'type' => 'button', 'disabled' => true]) !!}
                     @else
-                      <button type="button" class="btn btn-default pull-right" disabled="true">Login to Send Message</button>
+                      {!! Form::submit('Send Message', ['class' => 'btn btn-default pull-right', 'type' => 'button']) !!}
                     @endif
-                  </form>
+                  @else
+                    {!! Form::submit('Login to Send Message', ['class' => 'btn btn-default pull-right', 'type' => 'button', 'disabled' => true]) !!}
+                  @endif
+                  {!! Form::close() !!}
                 </div>
               </div>
             </div>

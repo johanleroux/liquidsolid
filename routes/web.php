@@ -9,3 +9,4 @@ Auth::routes();
 
 Route::resource('/ad', 'AdsController');
 Route::resource('/breed', 'BreedsController');
+Route::resource('/messages', 'MessagesController');
