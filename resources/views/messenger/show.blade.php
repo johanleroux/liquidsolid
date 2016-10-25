@@ -10,9 +10,8 @@
 
           @foreach($thread->messages as $message)
               <div class="container">
+                <i class="fa fa-user" aria-hidden="true"></i>
                   <a class="pull-left" href="#">
-                      <i class="fa fa-user" aria-hidden="true"></i>
-                      <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y alt="{{ $message->user->name }}" class="img-circle">
                   </a>
                   <div class="media-body">
                       <h5 class="media-heading">{{ $message->user->name }}</h5>

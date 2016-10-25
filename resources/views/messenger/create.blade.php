@@ -3,8 +3,11 @@
 @section('content')
 
 <h1>Create a new message</h1>
+
 {!! Form::open(['route' => 'messages.store']) !!}
 <div class="col-md-6">
+  {!! Form::hidden('recipient', $user_id) !!}
+
     <div class="form-group">
         {!! Form::label('subject', 'Subject', ['class' => 'control-label']) !!}
         {!! Form::text('subject', null, ['class' => 'form-control']) !!}

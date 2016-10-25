@@ -16,17 +16,14 @@
               <th>Thread</th>
               <th>Message</th>
               <th>Creator</th>
-              <th>Participants</th>
           </tr>
+
           @foreach($threads as $thread)
-            @if($thread->creator()->id == Auth::id())
             <tr class="header">
                 <td>{!! link_to('messages/' . $thread->id, $thread->subject) !!}</td>
                 <td>{{ $thread->latestMessage->body }}</td>
                 <td>{{ $thread->creator()->name }}</td>
-                <td>{{ $thread->participantsString(Auth::id()) }}</td>
             </tr>
-            @endif
           @endforeach
 
       </table>
