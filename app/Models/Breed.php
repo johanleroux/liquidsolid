@@ -39,7 +39,7 @@ class Breed extends Model
   {
     $query->leftJoin('ads', 'ads.breed_id', '=', 'breeds.id')
     ->selectRaw('breeds.*, count(ads.id) as ads_count')
-    ->groupBy('breeds.id')
+    ->groupBy('breeds.id', 'breeds.name', 'breeds.created_at', 'breeds.updated_at', 'breeds.deleted_at')
     ->orderBy('ads_count', 'desc');
   }
 }
