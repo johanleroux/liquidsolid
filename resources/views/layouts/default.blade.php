@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>@yield('title') | LiquidSolid</title>
+  <title>@yield('title')</title>
   <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/prettyPhoto.css') }}" rel="stylesheet">
   <link href="{{ asset('css/price-range.css') }}" rel="stylesheet">
   <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
@@ -31,7 +32,7 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="logo pull-left">
-              <a href="{{ url('/') }}"><img src="{{ asset('./img/home/logo.png') }}" alt="" /></a>
+              <a href="{{ url('/') }}"><img src="{{ asset('./img/logo.png') }}" alt="" /></a>
             </div>
           </div>
           <div class="col-sm-8">
@@ -40,9 +41,12 @@
                 <li><a href="#"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                 <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                 @if(Auth::user())
-                  <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                  <li><a href="#"><i class="fa fa-user"></i> Welcome, {{ Auth::user()->name }}</a></li>
-                  <li><a href="{{ url('/logout') }}"><i class="fa fa-user"></i> Logout</a></li>
+                  <li><a href="#"><i class="fa fa-user"></i> {{ Auth::user()->name }}</a></li>
+                  <li><a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Logout</a>
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                    </form>
+                  </li>
                 @else
                   <li><a href="{{ url('/login') }}"><i class="fa fa-lock"></i> Login</a></li>
                 @endif
@@ -67,23 +71,12 @@
             </div>
             <div class="mainmenu pull-left">
               <ul class="nav navbar-nav collapse navbar-collapse">
-                <li><a href="{{ url('/')}}" class="active">Home</a></li>
-                <li class="dropdown"><a href="#">Dog Breeds<i class="fa fa-angle-down"></i></a>
-                  <ul role="menu" class="sub-menu">
-                    <li><a href="#">Breed 1</a></li>
-                    <li><a href="#">Breed 2</a></li>
-                    <li><a href="#">Breed 3</a></li>
-                    <li><a href="#">more...</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown"><a href="#">Breeders<i class="fa fa-angle-down"></i></a>
-                  <ul role="menu" class="sub-menu">
-                    <li><a href="#">Breeder 1</a></li>
-                    <li><a href="#">Breeder 2</a></li>
-                    <li><a href="#">Breeder 3</a></li>
-                    <li><a href="#">more...</a></li>
-                  </ul>
-                </li>
+                <li><a href="{{ url('/')}}">Home</a></li>
+                <li><a href="{{ action('AdsController@index') }}">Ads</a></li>
+                <li><a href="{{ action('BreedsController@index') }}">Breeds</a></li>
+                @if(Auth::user())
+                  <li><a href="{{ action('AdsController@create') }}">Post Ad</a></li>
+                @endif
               </ul>
             </div>
           </div>
@@ -109,113 +102,9 @@
               <p>Plasma gas is for noobs.</p>
             </div>
           </div>
-          <div class="col-sm-7">
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                    <img src="{{ asset('./img/home/iframe1.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                    <img src="{{ asset('./img/home/iframe2.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                    <img src="{{ asset('./img/home/iframe3.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                    <img src="{{ asset('./img/home/iframe4.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 pull-right">
             <div class="address">
-              <img src="{{ asset('./img/home/map.png') }}" alt="World Map" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-widget">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="single-widget">
-              <h2>Top Breeds</h2>
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Breed 1</a></li>
-                <li><a href="#">Breed 2</a></li>
-                <li><a href="#">Breed 3</a></li>
-                <li><a href="#">Breed 4</a></li>
-                <li><a href="#">Breed 5</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-widget">
-              <h2>Top Breeders</h2>
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Breeder 1</a></li>
-                <li><a href="#">Breeder 2</a></li>
-                <li><a href="#">Breeder 3</a></li>
-                <li><a href="#">Breeder 4</a></li>
-                <li><a href="#">Breeder 5</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-widget">
-              <h2>About Shopper</h2>
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Company Information</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Store Location</a></li>
-                <li><a href="#">Affillate Program</a></li>
-                <li><a href="#">Copyright</a></li>
-              </ul>
+              <img src="{{ asset('./img/map.png') }}" alt="World Map" />
             </div>
           </div>
         </div>
@@ -236,8 +125,17 @@
   <script src="{{ asset('js/jquery.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>
-  <script src="{{ asset('js/price-range.js') }}"></script>
+  <script src="{{ asset('js/toastr.min.js') }}"></script>
   <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
+
+  @if (notify()->ready())
+    <script>toastr.{{ notify()->type() }}('{{ notify()->message() }}'
+    @if(!empty(notify()->option('heading')))
+    , '{{ notify()->option('heading') }}'
+    @endif
+  );
+  </script>
+@endif
 </body>
 </html>

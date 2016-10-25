@@ -1,9 +1,11 @@
 <?php
 
 Route::get('/', function () {
-  return view('welcome');
+  $ads = \App\Models\Ad::inRandomOrder()->take(9)->get();
+  return view('welcome', compact('ads'));
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::resource('/ad', 'AdsController');
+Route::resource('/breed', 'BreedsController');
