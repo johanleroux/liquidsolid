@@ -66,9 +66,11 @@
                 @if($current->diffInDays($ad->created_at) <= 7)
                   <img src="{{ asset('img/new.png') }}" class="newarrival" alt="">
                 @endif
-                @if(Auth::user()->id == $ad->user->id)
-                  <a href="{{ action('AdsController@edit', $ad) }}" class="btn btn-default cart" style="position: absolute; top: 0; left: 0; margin: 0px;"><i class="fa fa-pencil"></i> Edit Posting</a>
-                  {!! Form::open(['method'=>'delete','action'=>['AdsController@destroy', $ad], 'style' => 'display:inline']) !!}<button type="submit" class="btn btn-default cart" style="position: absolute; top: 0; left: 125px; margin: 0px;"><i class="fa fa-trash-o"></i> Delete</button>{!! Form::close() !!}
+                @if(Auth::user())
+                  @if(Auth::user()->id == $ad->user->id)
+                    <a href="{{ action('AdsController@edit', $ad) }}" class="btn btn-default cart" style="position: absolute; top: 0; left: 0; margin: 0px;"><i class="fa fa-pencil"></i> Edit Posting</a>
+                    {!! Form::open(['method'=>'delete','action'=>['AdsController@destroy', $ad], 'style' => 'display:inline']) !!}<button type="submit" class="btn btn-default cart" style="position: absolute; top: 0; left: 125px; margin: 0px;"><i class="fa fa-trash-o"></i> Delete</button>{!! Form::close() !!}
+                  @endif
                 @endif
                 <h2>{{$ad->title}}</h2>
                 <p><i class="fa fa-user"></i> {{ $ad->user->name }}</p>
