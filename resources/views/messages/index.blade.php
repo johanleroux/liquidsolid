@@ -18,9 +18,7 @@
               @foreach($threads as $thread)
                 <tr>
                   <td>
-                    @if($thread->isUnread(Auth::user()->id))
-                      <b>Not Read</b>
-                    @endif
+                    
 
                     <a href="{{ action('MessagesController@show', $thread->id) }}">{{ $thread->subject }}</a>
                   </td>

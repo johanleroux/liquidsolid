@@ -33,7 +33,7 @@ class MessagesController extends Controller
     abort(404);
   }
 
-  public function show(int $id)
+  public function show($id)
   {
     $thread = Thread::findOrFail($id);
     $thread->markAsRead(Auth::user()->id);
@@ -71,7 +71,7 @@ class MessagesController extends Controller
       return redirect()->back();
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, $id)
     {
       $thread = Thread::findOrFail($id);
 
