@@ -1,5 +1,5 @@
 @extends('layouts.default')
-
+@section('title', $thread->subject . ' | LiquidSolid')
 @section('content')
   <div class="container">
     <div class="row">

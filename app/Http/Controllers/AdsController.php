@@ -76,7 +76,8 @@ class AdsController extends Controller
   */
   public function show(Ad $ad)
   {
-    return view('ad.show', compact('ad'));
+    $breeds = Breed::orderByAds()->take(5)->get();
+    return view('ad.show', compact('ad', 'breeds'));
   }
 
   /**
