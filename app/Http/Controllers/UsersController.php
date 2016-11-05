@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -61,8 +63,9 @@ class UsersController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function edit(User $user)
+  public function edit()
   {
+    $user = Auth::user();
     return view('user.edit', compact('user'));
   }
 
@@ -73,9 +76,24 @@ class UsersController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function update(Request $request, $id)
+  public function update(Request $request)
   {
-    return view('user.edit');
+    $this->validate($request, [
+      'name'    => 'required|string',
+      'email'   => 'required|email|unique:users,email,' . Auth::user()->id,
+      'company' => 'string',
+      'street'  => 'string',
+    ]);
+
+    Auth::user()->update([
+      'name'    => $request->name,
+      'email'   => $request->email,
+      'company' => $request->company,
+      'street'  => $request->street
+    ]);
+
+    notify()->flash('Profile successfully updated.', 'success');
+    return redirect()->action('UsersController@edit', Auth::user()->id);
   }
 
   /**
@@ -86,6 +104,34 @@ class UsersController extends Controller
   */
   public function destroy($id)
   {
-    return view('user.show');
+    abort(404);
+  }
+
+  public function editPassword()
+  {
+    return view('user.change_password');
+  }
+
+  public function updatePassword(Request $request)
+  {
+    $this->validate($request, [
+      'password_old'          => 'required',
+      'password'              => 'required|different:password_old|confirmed',
+      'password_confirmation' => 'required',
+    ]);
+
+    if(!Hash::check($request->password_old, Auth::user()->password))
+    {
+      return redirect()->back()
+              ->withInput()
+              ->withErrors(array('password_old' => 'Old password is invalid!')); // will return only the errors
+    }
+
+    Auth::user()->update([
+      'password' => Hash::make($request->password)
+    ]);
+
+    notify()->flash('Password successfully changed.', 'success');
+    return redirect()->action('UsersController@editPassword');
   }
 }

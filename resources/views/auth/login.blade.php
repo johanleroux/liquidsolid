@@ -1,71 +1,87 @@
-@extends('layouts.default')
+@extends('layouts.obaju')
 @section('title', 'Login')
 
   @section('content')
-    <section id="form">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4 col-sm-offset-1">
-            <div class="login-form">
-              <h2>Login to your account</h2>
-              <form role="form" method="POST" action="{{ url('/login') }}">
-                {{ csrf_field() }}
-                <input type="email" name="email" placeholder="Email Address" />
-                @if ($errors->has('email'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                  </span>
-                @endif
-                <input type="password" name="password" placeholder="Password" />
-                @if ($errors->has('password'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                  </span>
-                @endif
-                <span>
-                  <input type="checkbox" class="checkbox">
-                  Keep me signed in
+    <div class="container">
+      <div class="col-md-6">
+        <div class="box">
+          <h1>New account</h1>
+          <p class="lead">Not our registered customer yet?</p>
+          <hr>
+          <form role="form" method="POST" action="{{ url('/register') }}">
+            {{ csrf_field() }}
+
+            <div class="form-group">
+              <input type="text" class="form-control" name="name" placeholder="Full Name" />
+              @if ($errors->has('name'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('name') }}</strong>
                 </span>
-                <button type="submit" class="btn btn-default">Login</button>
-              </form>
-            </div><!--/login form-->
-          </div>
-          <div class="col-sm-1">
-            <h2 class="or">OR</h2>
-          </div>
-          <div class="col-sm-4">
-            <div class="signup-form"><!--sign up form-->
-              <h2>New User Signup!</h2>
-              <form role="form" method="POST" action="{{ url('/register') }}">
-                {{ csrf_field() }}
-                <input type="text" name="name" placeholder="Name" />
-                @if ($errors->has('name'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('name') }}</strong>
-                  </span>
-                @endif
-                <input type="email" name="email" placeholder="Email Address" />
-                @if ($errors->has('email'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                  </span>
-                @endif
-                <input type="password" name="password" placeholder="Password" />
-                @if ($errors->has('password'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                  </span>
-                @endif
-                <input type="password" name="password_confirmation" placeholder="Confirm Password" />
-                @if ($errors->has('password_confirmation'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('password_confirmation') }}</strong>
-                  </span>
-                @endif
-                <button type="submit" class="btn btn-default">Signup</button>
-              </form>
-            </div><!--/sign up form-->
-          </div>
+              @endif
+            </div>
+
+            <div class="form-group">
+              <input type="email" class="form-control" name="email" placeholder="Email Address" />
+              @if ($errors->has('email'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('email') }}</strong>
+                </span>
+              @endif
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="Password" />
+              @if ($errors->has('password'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('password') }}</strong>
+                </span>
+              @endif
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" />
+              @if ($errors->has('password_confirmation'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('password_confirmation') }}</strong>
+                </span>
+              @endif
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="box">
+          <h1>Login</h1>
+          <p class="lead">Already our customer?</p>
+          <hr>
+          <form role="form" method="POST" action="{{ url('/login') }}">
+            {{ csrf_field() }}
+
+            <div class="form-group">
+              <input type="email" class="form-control" name="email" placeholder="Email Address" />
+              @if ($errors->has('email'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('email') }}</strong>
+                </span>
+              @endif
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="Password" />
+              @if ($errors->has('password'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('password') }}</strong>
+                </span>
+              @endif
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+          </form>
         </div>
       </div>
     </section><!--/form-->

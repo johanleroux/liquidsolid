@@ -1,73 +1,65 @@
-@extends('layouts.default')
+@extends('layouts.obaju')
 @section('title', 'Home')
 @section('content')
-  <section id="slider"><!--slider-->
+  <div class="container">
+    <div class="col-md-12">
+      <div id="main-slider">
+        <div class="item"><img src="http://placehold.it/1200x563" alt="" class="img-responsive"></div>
+        <div class="item"><img src="http://placehold.it/1200x563" alt="" class="img-responsive"></div>
+        <div class="item"><img src="http://placehold.it/1200x563" alt="" class="img-responsive"></div>
+        <div class="item"><img src="http://placehold.it/1200x563" alt="" class="img-responsive"></div>
+        <div class="item"><img src="http://placehold.it/1200x563" alt="" class="img-responsive"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hot">
+    <div class="box">
+      <div class="container">
+        <div class="col-md-12">
+          <h2>Newest postings</h2>
+        </div>
+      </div>
+    </div>
     <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-              <li data-target="#slider-carousel" data-slide-to="1"></li>
-              <li data-target="#slider-carousel" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="item active">
-                <div class="col-sm-12">
-                  <img src="http://placehold.it/900x400" class="img-responsive" alt="" />
-                </div>
-              </div>
-              <div class="item">
-                <div class="col-sm-12">
-                  <img src="http://placehold.it/900x400" class="img-responsive" alt="" />
-                </div>
-              </div>
-              <div class="item">
-                <div class="col-sm-12">
-                  <img src="http://placehold.it/900x400" class="img-responsive" alt="" />
-                </div>
-              </div>
+      <div class="product-slider">
+        @foreach($latest as $ad)
+        <div class="item">
+          <div class="product">
+            <a href="{{ action('AdsController@show', $ad) }}"><img src="http://placehold.it/450x600" alt="" class="img-responsive"></a>
+            <div class="text">
+              <h3><a href="{{ action('AdsController@show', $ad) }}">{{ $ad->title }}</a></h3>
+              <p class="price">R {{ number_format($ad->price, 2) }}</p>
             </div>
-            <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-              <i class="fa fa-angle-left"></i>
-            </a>
-            <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-              <i class="fa fa-angle-right"></i>
-            </a>
           </div>
+        </div>
+      @endforeach
+      </div>
+    </div>
+  </div>
+
+  <div id="hot">
+    <div class="box">
+      <div class="container">
+        <div class="col-md-12">
+          <h2>Random postings</h2>
         </div>
       </div>
     </div>
-  </section><!--/slider-->
-
-  <section>
     <div class="container">
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="left-sidebar">
-            <div class="brands_products"><!--brands_products-->
-              <h2>Breeds</h2>
-              <div class="brands-name">
-                @include('breed._list', $breeds)
-              </div>
-            </div><!--/brands_products-->
+      <div class="product-slider">
+        @foreach($rand as $ad)
+        <div class="item">
+          <div class="product">
+            <a href="{{ action('AdsController@show', $ad) }}"><img src="http://placehold.it/450x600" alt="" class="img-responsive"></a>
+            <div class="text">
+              <h3><a href="{{ action('AdsController@show', $ad) }}">{{ $ad->title }}</a></h3>
+              <p class="price">R {{ number_format($ad->price, 2) }}</p>
+            </div>
           </div>
         </div>
-
-        <div class="col-sm-9 padding-right">
-          <div class="features_items"><!--features_items-->
-            <h2 class="title text-center">Random Postings</h2>
-            @forelse($ads as $ad)
-              <div class="col-sm-4">
-                @include('ad._ad', compact('ad'))
-              </div>
-            @empty
-              <h2>Oops, no dog postings!</h2>
-              <p>Sorry, we could not find any active dog postings in our system.</p>
-            @endforelse
-          </div><!--features_items-->
-        </div>
+      @endforeach
       </div>
     </div>
-  </section>
+  </div>
 @endsection

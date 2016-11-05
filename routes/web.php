@@ -1,10 +1,10 @@
 <?php
 
 Route::get('/', function () {
-  $breeds = \App\Models\Breed::orderByAds()->take(5)->get();
-  $ads = \App\Models\Ad::inRandomOrder()->take(9)->get();
+  $rand = \App\Models\Ad::inRandomOrder()->take(15)->get();
+  $latest = \App\Models\Ad::orderBy('created_at', 'desc')->take(15)->get();
 
-  return view('welcome', compact('ads', 'breeds'));
+  return view('welcome', compact('rand', 'latest'));
 });
 
 Auth::routes();
@@ -12,20 +12,10 @@ Auth::routes();
 Route::resource('/ad', 'AdsController');
 Route::resource('/breed', 'BreedsController');
 Route::resource('/messages', 'MessagesController');
+Route::get('/user/change_password', 'UsersController@editPassword');
+Route::post('/user/change_password', 'UsersController@updatePassword');
 Route::resource('/user', 'UsersController',['only' => ['show', 'edit', 'update', 'destroy']]);
 
 Route::get('/test', function(){
-  $user = Auth::loginUsingId(1);
-  $hasRole = $user->hasRole('breeder');
-  $hasPerm = $user->can('ad.edit');
-  //$hasPerm = $user->hasPermission('breeder');
-
-  /*$role = $user->roles->first();
-  $permission = new \App\Models\Permission();
-  $permission->name  = 'post.ad';
-  $permission->label = 'Post Ad';
-  $permission->save();
-  $role->givePermissionTo($permission);*/
-
-  dd($hasPerm);
+  return view('test');
 });

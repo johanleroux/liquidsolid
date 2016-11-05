@@ -1,14 +1,13 @@
-<div class="product-image-wrapper">
-  <div class="single-products">
-    <div class="productinfo text-center">
-      <a href="{{ action('AdsController@show', $ad) }}"><img src="http://placehold.it/250x380" alt=""></a>
-      <h2><a href="{{ action('AdsController@show', $ad) }}">{{ $ad->title }}</a></h2>
-      <p>R {{ $ad->price }}</p>
-      @if(Auth::user())
-        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-      @else
-        <a href="{{ url('/login') }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-      @endif
-    </div>
+<div class="product">
+  <a href="{{ action('AdsController@show', $ad) }}">
+    <img src="http://placehold.it/450x600" alt="" class="img-responsive">
+  </a>
+  <div class="text">
+    <h3><a href="{{ action('AdsController@show', $ad) }}">{{ $ad->title }}</a></h3>
+    <p class="price">R {{ number_format($ad->price, 2) }}</p>
+    <p class="buttons">
+      <a href="{{ action('AdsController@show', $ad) }}" class="btn btn-default">View detail</a>
+      <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+    </p>
   </div>
 </div>

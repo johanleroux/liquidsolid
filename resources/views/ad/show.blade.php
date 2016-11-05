@@ -1,127 +1,301 @@
-@extends('layouts.default')
+@extends('layouts.obaju')
 @section('title', $ad->title . ' | Dog Posting')
   @section('content')
     <div class="container">
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="left-sidebar">
-            <div class="brands_products"><!--brands_products-->
-              <h2>Breeds</h2>
-              <div class="brands-name">
-                @include('breed._list', $breeds)
-              </div>
-            </div><!--/brands_products-->
+      <div class="col-md-12">
+        {!! Breadcrumbs::render('ad_show', $ad) !!}
+      </div>
+      <div class="col-md-3">
+        <div class="panel panel-default sidebar-menu">
+          <div class="panel-heading">
+            <h3 class="panel-title">Breeds</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="nav nav-pills nav-stacked category-menu">
+              <ul>
+                @foreach($breeds as $breed)
+                  <li><a href="{{ action('AdsController@index', ['breed_id' => $breed->id])}}">{{ $breed->name }} ({{ $breed->ads_count }})</a></li>
+                @endforeach
+              </ul>
+            </ul>
           </div>
         </div>
-        <div class="col-sm-9 padding-right">
-          <div class="product-details"><!--product-details-->
-            <div class="col-sm-5">
-              <div class="view-product">
-                <img src="{{ $ad->getMedia()[0]->getUrl() }}" alt="">
-              </div>
-              <div id="similar-product" class="carousel slide" data-ride="carousel">
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                  <div class="item active">
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                  </div>
-                  <div class="item">
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                  </div>
-                  <div class="item">
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                    <a href=""><img src="http://placehold.it/85x85" alt=""></a>
-                  </div>
-                </div>
-
-                <!-- Controls -->
-                <a class="left item-control" href="#similar-product" data-slide="prev">
-                  <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="right item-control" href="#similar-product" data-slide="next">
-                  <i class="fa fa-angle-right"></i>
-                </a>
-              </div>
-
-            </div>
-            <div class="col-sm-7">
-              <div class="product-information"><!--/product-information-->
-                @php
-                  $current = \Carbon\Carbon::now();
-                @endphp
-                @if($current->diffInDays($ad->created_at) <= 7)
-                  <img src="{{ asset('img/new.png') }}" class="newarrival" alt="">
-                @endif
-                @if(Auth::user())
-                  @if(Auth::user()->id == $ad->user->id)
-                    <a href="{{ action('AdsController@edit', $ad) }}" class="btn btn-default cart" style="position: absolute; top: 0; left: 0; margin: 0px;"><i class="fa fa-pencil"></i> Edit Posting</a>
-                    {!! Form::open(['method'=>'delete','action'=>['AdsController@destroy', $ad], 'style' => 'display:inline']) !!}<button type="submit" class="btn btn-default cart" style="position: absolute; top: 0; left: 125px; margin: 0px;"><i class="fa fa-trash-o"></i> Delete</button>{!! Form::close() !!}
-                  @endif
-                @endif
-                <h2>{{$ad->title}}</h2>
-                <p><i class="fa fa-user"></i> {{ $ad->user->name }}</p>
-                <span>
-                  <span>
-                    R {{$ad->price}}
-                  </span><br><br><br>
-                  <label>Quantity:</label>
-                  <!-- TODO: Calculate max -->
-                  {!! Form::number('quantity', 1, ['min' => '1']) !!}
-                  <button type="button" class="btn btn-default cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                </span>
-                <p><b>Breed:</b> {{$ad->breed->name}}</p>
-                <p><b>Available</b></p>
-              </div><!--/product-information-->
-            </div>
-          </div><!--/product-details-->
-
-          <div class="category-tab shop-details-tab"><!--category-tab-->
-            <div class="col-sm-12">
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
-                <li><a href="#reviews" data-toggle="tab">Contact</a></li>
-              </ul>
-            </div>
-            <div class="tab-content">
-              <div class="tab-pane fade active in" id="details">
-                <div class="col-sm-12" style="padding: 0px 25px; font-size:16px">
-                  <h4>Description:</h4>
-                  <p>{{$ad->description}}</p>
-                  <br>
-                  <h4>Location:</h4>
-                  <p>{{$ad->location}}</p>
-                </div>
-              </div>
-
-              <div class="tab-pane fade" id="reviews">
-                <div class="col-sm-12">
-                  <p><b>Write The Breeder</b></p>
-                  {!! Form::open(['action' => 'MessagesController@store']) !!}
-                  {!! Form::hidden('recipient', $ad->user->id) !!}
-                  <span>{!! Form::text('subject', null, ['placeholder' => 'Subject']) !!}</span>
-                  {!! Form::textarea('message', null, ['placeholder' => 'Message']) !!}
-
-                  @if(Auth::user())
-                    @if(Auth::user()->id == $ad->user->id)
-                      {!! Form::submit('Send Message', ['class' => 'btn btn-default pull-right', 'type' => 'button', 'disabled' => true]) !!}
-                    @else
-                      {!! Form::submit('Send Message', ['class' => 'btn btn-default pull-right', 'type' => 'button']) !!}
-                    @endif
-                  @else
-                    {!! Form::submit('Login to Send Message', ['class' => 'btn btn-default pull-right', 'type' => 'button', 'disabled' => true]) !!}
-                  @endif
-                  {!! Form::close() !!}
-                </div>
-              </div>
-            </div>
-          </div><!--/category-tab-->
-        </div>
       </div>
+      <div class="col-md-9">
+        <div class="row" id="productMain">
+          <div class="col-sm-6">
+            <div id="mainImage">
+              <img src="img/detailbig3.jpg" alt="" class="img-responsive">
+            </div>
+
+            <div class="ribbon sale">
+              <div class="theribbon">SALE</div>
+              <div class="ribbon-background"></div>
+            </div>
+            <!-- /.ribbon -->
+
+            <div class="ribbon new">
+              <div class="theribbon">NEW</div>
+              <div class="ribbon-background"></div>
+            </div>
+            <!-- /.ribbon -->
+
+          </div>
+          <div class="col-sm-6">
+            <div class="box">
+              <h1 class="text-center">White Blouse Armani</h1>
+              <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material &amp; care and sizing</a>
+              </p>
+              <p class="price">$124.00</p>
+
+              <p class="text-center buttons">
+                <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                <a href="basket.html" class="btn btn-default"><i class="fa fa-heart"></i> Add to wishlist</a>
+              </p>
+
+
+            </div>
+
+            <div class="row" id="thumbs">
+              <div class="col-xs-4">
+                <a href="img/detailbig1.jpg" class="thumb">
+                  <img src="img/detailsquare.jpg" alt="" class="img-responsive">
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <a href="img/detailbig2.jpg" class="thumb">
+                  <img src="img/detailsquare2.jpg" alt="" class="img-responsive">
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <a href="img/detailbig3.jpg" class="thumb active">
+                  <img src="img/detailsquare3.jpg" alt="" class="img-responsive">
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="box" id="details">
+          <p>
+          </p><h4>Product details</h4>
+          <p>White lace top, woven, has a round neck, short sleeves, has knitted lining attached</p>
+          <h4>Material &amp; care</h4>
+          <ul>
+            <li>Polyester</li>
+            <li>Machine wash</li>
+          </ul>
+          <h4>Size &amp; Fit</h4>
+          <ul>
+            <li>Regular fit</li>
+            <li>The model (height 5'8" and chest 33") is wearing a size S</li>
+          </ul>
+
+          <blockquote>
+            <p><em>Define style this season with Armani's new range of trendy tops, crafted with intricate details. Create a chic statement look by teaming this lace number with skinny jeans and pumps.</em>
+            </p>
+          </blockquote>
+
+          <hr>
+          <div class="social">
+            <h4>Show it to your friends</h4>
+            <p>
+              <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+              <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+            </p>
+          </div>
+        </div>
+
+        <div class="row same-height-row">
+          <div class="col-md-3 col-sm-6">
+            <div class="box same-height" style="height: 379px;">
+              <h3>You may also like these products</h3>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="product same-height" style="height: 379px;">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front">
+                    <a href="detail.html">
+                      <img src="img/product2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="back">
+                    <a href="detail.html">
+                      <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="detail.html" class="invisible">
+                <img src="img/product2.jpg" alt="" class="img-responsive">
+              </a>
+              <div class="text">
+                <h3>Fur coat</h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+            <!-- /.product -->
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="product same-height" style="height: 379px;">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front">
+                    <a href="detail.html">
+                      <img src="img/product1.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="back">
+                    <a href="detail.html">
+                      <img src="img/product1_2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="detail.html" class="invisible">
+                <img src="img/product1.jpg" alt="" class="img-responsive">
+              </a>
+              <div class="text">
+                <h3>Fur coat</h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+            <!-- /.product -->
+          </div>
+
+
+          <div class="col-md-3 col-sm-6">
+            <div class="product same-height" style="height: 379px;">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front">
+                    <a href="detail.html">
+                      <img src="img/product3.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="back">
+                    <a href="detail.html">
+                      <img src="img/product3_2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="detail.html" class="invisible">
+                <img src="img/product3.jpg" alt="" class="img-responsive">
+              </a>
+              <div class="text">
+                <h3>Fur coat</h3>
+                <p class="price">$143</p>
+
+              </div>
+            </div>
+            <!-- /.product -->
+          </div>
+
+        </div>
+
+        <div class="row same-height-row">
+          <div class="col-md-3 col-sm-6">
+            <div class="box same-height" style="height: 379px;">
+              <h3>Products viewed recently</h3>
+            </div>
+          </div>
+
+
+          <div class="col-md-3 col-sm-6">
+            <div class="product same-height" style="height: 379px;">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front">
+                    <a href="detail.html">
+                      <img src="img/product2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="back">
+                    <a href="detail.html">
+                      <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="detail.html" class="invisible">
+                <img src="img/product2.jpg" alt="" class="img-responsive">
+              </a>
+              <div class="text">
+                <h3>Fur coat</h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+            <!-- /.product -->
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="product same-height" style="height: 379px;">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front">
+                    <a href="detail.html">
+                      <img src="img/product1.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="back">
+                    <a href="detail.html">
+                      <img src="img/product1_2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="detail.html" class="invisible">
+                <img src="img/product1.jpg" alt="" class="img-responsive">
+              </a>
+              <div class="text">
+                <h3>Fur coat</h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+            <!-- /.product -->
+          </div>
+
+
+          <div class="col-md-3 col-sm-6">
+            <div class="product same-height" style="height: 379px;">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front">
+                    <a href="detail.html">
+                      <img src="img/product3.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="back">
+                    <a href="detail.html">
+                      <img src="img/product3_2.jpg" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="detail.html" class="invisible">
+                <img src="img/product3.jpg" alt="" class="img-responsive">
+              </a>
+              <div class="text">
+                <h3>Fur coat</h3>
+                <p class="price">$143</p>
+
+              </div>
+            </div>
+            <!-- /.product -->
+          </div>
+
+        </div>
+
+      </div>
+      <!-- /.col-md-9 -->
     </div>
   @endsection

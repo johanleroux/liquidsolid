@@ -170,6 +170,7 @@ return [
   Codecourse\Notify\NotifyServiceProvider::class,
   Collective\Html\HtmlServiceProvider::class,
   Cmgmyr\Messenger\MessengerServiceProvider::class,
+  DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
   Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
 
   /*
@@ -232,6 +233,7 @@ return [
   'PDF' => Barryvdh\DomPDF\Facade::class,
   'Form' => Collective\Html\FormFacade::class,
   'Html' => Collective\Html\HtmlFacade::class,
+  'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
 
   ],
 
