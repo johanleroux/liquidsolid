@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class Ad extends Model
+class Ad extends Model implements HasMedia
 {
-  use SoftDeletes;
+  use SoftDeletes, HasMediaTrait;
 
   /**
   * The table associated with the model.

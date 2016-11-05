@@ -55,14 +55,24 @@ class AdsController extends Controller
   public function store(Request $request)
   {
     $this->validate($request, [
-      'breed_id'    => 'required|exists:breeds,id',
-      'title'       => 'required|string',
-      'location'    => 'required|string',
-      'description' => 'required|string',
-      'price'       => 'required|numeric',
+    'breed_id'    => 'required|exists:breeds,id',
+    'title'       => 'required|string',
+    'location'    => 'required|string',
+    'description' => 'required|string',
+    'price'       => 'required|numeric',
+    'image.*'     => 'image',
     ]);
 
     $ad = Auth::user()->ads()->create($request->only(['breed_id', 'title', 'location', 'description', 'price']));
+
+    foreach($request->allFiles()['image'] as $image)
+    {
+      $unique = md5(rand());
+      $ad->addMedia($image)
+      ->usingName($unique)
+      ->usingFileName($unique . '.' . $image->extension())
+      ->toMediaLibrary();
+    }
 
     notify()->flash('Ad '. $ad->id .' successfully posted.', 'success');
     return redirect()->action('AdsController@show', $ad);
@@ -106,11 +116,11 @@ class AdsController extends Controller
     abort_unless(Auth::user()->id == $ad->user->id, 404);
 
     $this->validate($request, [
-      'breed_id'    => 'required|exists:breeds,id',
-      'title'       => 'required|string',
-      'location'    => 'required|string',
-      'description' => 'required|string',
-      'price'       => 'required|numeric',
+    'breed_id'    => 'required|exists:breeds,id',
+    'title'       => 'required|string',
+    'location'    => 'required|string',
+    'description' => 'required|string',
+    'price'       => 'required|numeric',
     ]);
 
     $ad->update($request->only(['breed_id', 'title', 'location', 'description', 'price']));

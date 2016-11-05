@@ -41,7 +41,8 @@
                 <li><a href="#"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                 <li><a href="#"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                 @if(Auth::user())
-                  <li><a href="#"><i class="fa fa-user"></i> {{ Auth::user()->name }}</a></li>
+                  <li><a href="{{ action('MessagesController@index') }}"><i class="fa fa-envelope"></i> Messages</a></li>
+                  <li><a href="{{ action('UsersController@show', Auth::user()) }}"><i class="fa fa-user"></i> {{ Auth::user()->name }}</a></li>
                   <li><a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Logout</a>
                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                       {{ csrf_field() }}
@@ -75,8 +76,11 @@
                 <li><a href="{{ action('AdsController@index') }}">Ads</a></li>
                 <li><a href="{{ action('BreedsController@index') }}">Breeds</a></li>
                 @if(Auth::user())
-                  <li><a href="{{ action('AdsController@create') }}">Post Ad</a></li>
-                  <li><a href="{{ action('MessagesController@index') }}">Messages</a></li>
+                  @can('ad.create')
+                    <li><a href="{{ action('AdsController@create') }}">Post Ad</a></li>
+                  @else
+                    <li><a href="#">Apply for Breeder</a></li>
+                  @endcan
                 @endif
               </ul>
             </div>
@@ -132,11 +136,11 @@
 
   @if (notify()->ready())
     <script>toastr.{{ notify()->type() }}('{{ notify()->message() }}'
-    @if(!empty(notify()->option('heading')))
-    , '{{ notify()->option('heading') }}'
-    @endif
-  );
-  </script>
-@endif
+      @if(!empty(notify()->option('heading')))
+        , '{{ notify()->option('heading') }}'
+      @endif
+      );
+    </script>
+  @endif
 </body>
 </html>

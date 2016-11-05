@@ -17,11 +17,13 @@ class UsersTableSeeder extends Seeder
     $user->email    = 'john@example.com';
     $user->password = bcrypt('secret');
     $user->save();
+    $user->assignRole('admin');
 
     $user = new User();
     $user->name     = 'Jane Doe';
     $user->email    = 'jane@example.com';
     $user->password = bcrypt('secret');
     $user->save();
+    $user->assignRole('breeder');
   }
 }

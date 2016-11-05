@@ -17,7 +17,7 @@
           <div class="product-details"><!--product-details-->
             <div class="col-sm-5">
               <div class="view-product">
-                <img src="http://placehold.it/330x380" alt="">
+                <img src="{{ $ad->getMedia()[0]->getUrl() }}" alt="">
               </div>
               <div id="similar-product" class="carousel slide" data-ride="carousel">
 

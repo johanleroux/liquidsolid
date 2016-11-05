@@ -4,7 +4,7 @@
   @section('content')
     <div class="container">
       <div class="row">
-        {!! Form::open(['action' => 'AdsController@store']) !!}
+        {!! Form::open(['action' => 'AdsController@store', 'files' => true]) !!}
         @include('ad._form', ['title'=>'Post An Post!'])
         {!! Form::close() !!}
       </div>

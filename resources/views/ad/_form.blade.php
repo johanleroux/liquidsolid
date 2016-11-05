@@ -26,6 +26,12 @@
         <strong>{{ $errors->first('price') }}</strong>
       </span>
     @endif
+    {{ Form::file('image[]', ['multiple' => true]) }}
+    @foreach ($errors->get('image.*') as $message)
+      <span class="help-block">
+        <strong>{{ $message[0] }}</strong>
+      </span>
+    @endforeach
     {{ Form::button('Post Ad', ['class' => 'btn btn-default', 'type' => 'Submit']) }}
   </div>
   <div class="col-sm-6">

@@ -170,6 +170,7 @@ return [
   Codecourse\Notify\NotifyServiceProvider::class,
   Collective\Html\HtmlServiceProvider::class,
   Cmgmyr\Messenger\MessengerServiceProvider::class,
+  Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
 
   /*
   * Application Service Providers...
