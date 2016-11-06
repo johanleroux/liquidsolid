@@ -47,6 +47,11 @@ Breadcrumbs::register('account_show', function($breadcrumbs, $user) {
   $breadcrumbs->push($user->name, action('UsersController@show', $user->id));
 });
 
+// Home > Orders
+Breadcrumbs::register('account_orders', function($breadcrumbs) {
+  $breadcrumbs->parent('account_show', Auth::user());
+  $breadcrumbs->push('My Orders', action('UsersController@orders'));
+});
 
 // Home > Account > Edit
 Breadcrumbs::register('account_edit', function($breadcrumbs) {
@@ -58,4 +63,16 @@ Breadcrumbs::register('account_edit', function($breadcrumbs) {
 Breadcrumbs::register('account_change_password', function($breadcrumbs) {
   $breadcrumbs->parent('account_show', Auth::user());
   $breadcrumbs->push('Change Password', action('UsersController@editPassword'));
+});
+
+// Home > Shopping Cart
+Breadcrumbs::register('shopping_cart', function($breadcrumbs) {
+  $breadcrumbs->parent('home');
+  $breadcrumbs->push('Shopping Cart', action('CartsController@show'));
+});
+
+// Home > Shopping Cart
+Breadcrumbs::register('shopping_payment', function($breadcrumbs) {
+  $breadcrumbs->parent('shopping_cart');
+  $breadcrumbs->push('Payment Method', action('OrdersController@payment'));
 });

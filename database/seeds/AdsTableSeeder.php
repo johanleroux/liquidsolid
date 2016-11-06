@@ -13,7 +13,7 @@ class AdsTableSeeder extends Seeder
   public function run()
   {
     factory(Ad::class, 15)->create()->each(function($u) {
-      for($i = 0; $i < 3; $i++)
+      for($i = 0; $i < 1; $i++)
       {
         $url = 'http://liquidsolid.app/dummy/dummy'.rand(1,9).'.jpg';
 

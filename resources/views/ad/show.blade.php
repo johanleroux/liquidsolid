@@ -44,7 +44,7 @@
               </p>
               <p class="price">R {{ number_format($ad->price, 2) }}</p>
               <p class="text-center buttons">
-                <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                <a href="{{ action('CartsController@add', $ad) }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                 @if(Auth::user())
                   @if(Auth::user()->id == $ad->user->id)
                     <a href="{{ action('AdsController@edit', $ad) }}" class="btn btn-info cart"><i class="fa fa-pencil"></i> Edit Posting</a>

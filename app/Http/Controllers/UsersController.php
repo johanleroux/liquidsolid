@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Hash;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -55,6 +56,20 @@ class UsersController extends Controller
   public function show(User $user)
   {
     return view('user.show', compact('user'));
+  }
+
+  public function orders()
+  {
+    $orders = Auth::user()->orders;
+
+    return view('user.orders', compact('orders'));
+  }
+
+  public function sales()
+  {
+    $orders = Auth::user()->sales;
+
+    return view('user.sales', compact('orders'));
   }
 
   /**

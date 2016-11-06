@@ -10,6 +10,7 @@
 
   <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
   <link href="{{ asset('css/owl.carousel.css') }}" rel="stylesheet">
   <link href="{{ asset('css/owl.theme.css') }}" rel="stylesheet">
@@ -53,7 +54,7 @@
             <span class="sr-only">Toggle search</span>
             <i class="fa fa-search"></i>
           </button>
-          <a class="btn btn-default navbar-toggle" href="basket.html"><i class="fa fa-shopping-cart"></i></a>
+          <a class="btn btn-default navbar-toggle" href="{{ action('CartsController@show') }}"><i class="fa fa-shopping-cart"></i></a>
         </div>
       </div>
       <!--/.navbar-header -->
@@ -74,7 +75,7 @@
 
       <div class="navbar-buttons">
         <div class="navbar-collapse collapse right" id="basket-overview">
-          <a href="basket.html" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i></a>
+          <a href="{{ action('CartsController@show') }}" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i></a>
         </div>
         <!--/.nav-collapse -->
 

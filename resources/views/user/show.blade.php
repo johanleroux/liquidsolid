@@ -10,18 +10,8 @@
           <div class="panel-heading">
             <h3 class="panel-title">Account Section</h3>
           </div>
-
           <div class="panel-body">
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href="{{ action('UsersController@show', Auth::user()->id) }}"><i class="fa fa-user"></i> My account</a></li>
-              <li><a href="{{ action('UsersController@editPassword') }}"><i class="fa fa-wrench"></i> Change Password</a></li>
-              <li><a href="{{ action('UsersController@edit', Auth::user()->id) }}"><i class="fa fa-pencil"></i> Edit Profile</a></li>
-              <li><a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> Logout</a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                  {{ csrf_field() }}
-                </form>
-              </li>
-            </ul>
+            @include('user._sidebar')
           </div>
         </div>
       </div>
@@ -50,11 +40,11 @@
                       <td>
                         <a href="{{ action('AdsController@show', $ad) }}" class="btn btn-primary btn-sm">View</a>
                         @if(Auth::user()->id == $user->id)
-                        <a href="{{ action('AdsController@edit', $ad) }}" class="btn btn-success btn-sm">Edit</a>
+                          <a href="{{ action('AdsController@edit', $ad) }}" class="btn btn-success btn-sm">Edit</a>
 
-                        <!-- TODO: Fix delete -->
-                        <a href="{{ action('AdsController@destroy', $ad) }}" class="btn btn-danger btn-sm">Delete</a>
-                      @endif
+                          <!-- TODO: Fix delete -->
+                          <a href="{{ action('AdsController@destroy', $ad) }}" class="btn btn-danger btn-sm">Delete</a>
+                        @endif
                       </td>
                     </tr>
                   @endforeach

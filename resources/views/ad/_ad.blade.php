@@ -7,7 +7,7 @@
     <p class="price">R {{ number_format($ad->price, 2) }}</p>
     <p class="buttons">
       <a href="{{ action('AdsController@show', $ad) }}" class="btn btn-default">View details</a>
-      <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+      <a href="{{ action('CartsController@add', $ad) }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
     </p>
   </div>
 </div>
