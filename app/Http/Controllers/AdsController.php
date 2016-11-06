@@ -71,7 +71,7 @@ class AdsController extends Controller
       $ad->addMedia($image)
       ->usingName($unique)
       ->usingFileName($unique . '.' . $image->extension())
-      ->toMediaLibrary();
+      ->toCollection('images');
     }
 
     notify()->flash('Ad '. $ad->id .' successfully posted.', 'success');

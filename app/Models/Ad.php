@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Ad extends Model implements HasMedia
+class Ad extends Model implements HasMediaConversions
 {
   use SoftDeletes, HasMediaTrait;
 
@@ -40,5 +40,16 @@ class Ad extends Model implements HasMedia
   public function user()
   {
     return $this->belongsTo('App\Models\User');
+  }
+
+  public function registerMediaConversions()
+  {
+    $this->addMediaConversion('thumb')
+    ->setManipulations(['h' => 600])
+    ->performOnCollections('images');
+
+    $this->addMediaConversion('icon')
+    ->setManipulations(['h' => 108, 'w' => 108])
+    ->performOnCollections('images');
   }
 }

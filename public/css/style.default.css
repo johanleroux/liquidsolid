@@ -1693,3 +1693,8 @@ address {
   font-size: 12px;
   font-weight: 300;
 }
+
+.product img {
+    height: 300px;
+    object-fit: cover;
+}
