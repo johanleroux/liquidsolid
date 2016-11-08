@@ -47,4 +47,9 @@ class User extends Authenticatable
   {
     return $this->hasMany('App\Models\Order', 'seller_id');
   }
+
+  public function breeder_requests()
+  {
+    return $this->hasMany('App\Models\BreederRequest');
+  }
 }

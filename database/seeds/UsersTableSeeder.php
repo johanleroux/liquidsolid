@@ -14,20 +14,38 @@ class UsersTableSeeder extends Seeder
   {
     $user = new User();
     $user->name           = 'John Doe';
-    $user->email          = 'john@example.com';
+    $user->email          = 'admin@example.com';
     $user->password       = bcrypt('secret');
     $user->remember_token = str_random(10);
     $user->save();
     $user->assignRole('admin');
+    $user->assignRole('moderator');
+    $user->assignRole('breeder');
 
     $user = new User();
     $user->name           = 'Jane Doe';
-    $user->email          = 'jane@example.com';
+    $user->email          = 'mod@example.com';
+    $user->password       = bcrypt('secret');
+    $user->remember_token = str_random(10);
+    $user->save();
+    $user->assignRole('moderator');
+    $user->assignRole('breeder');
+
+    $user = new User();
+    $user->name           = 'Bob Doe';
+    $user->email          = 'breeder@example.com';
     $user->password       = bcrypt('secret');
     $user->remember_token = str_random(10);
     $user->save();
     $user->assignRole('breeder');
 
-    factory(User::class, 8)->create();
+    $user = new User();
+    $user->name           = 'Just Doe';
+    $user->email          = 'user@example.com';
+    $user->password       = bcrypt('secret');
+    $user->remember_token = str_random(10);
+    $user->save();
+
+    factory(User::class, 21)->create();
   }
 }

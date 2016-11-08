@@ -67,8 +67,16 @@
             @can('ad.create')
               <li><a href="{{ action('AdsController@create') }}">Post Ad</a></li>
             @else
-              <li><a href="#">Apply for Breeder</a></li>
+              <li><a href="{{ action('BreederRequestsController@create')}}">Apply for Breeder</a></li>
             @endcan
+
+            @if(Auth::user()->hasRole('moderator') || Auth::user()->hasRole('admin'))
+              <li><a href="{{ action('BreederRequestsController@index')}}">Review</a></li>
+            @endif
+
+            @if(Auth::user()->hasRole('admin'))
+              <li><a href="{{ action('UsersController@index')}}">Users</a></li>
+            @endif
           @endif
         </ul>
       </div>
@@ -125,7 +133,7 @@
           </div>
           <div class="col-md-3 col-sm-6 pull-right">
             <div class="address">
-              <img src="http://liquidsolid.app/./img/map.png" alt="World Map">
+              <img src="{{ asset('img/map.png') }}" alt="World Map">
             </div>
           </div>
         </div>

@@ -13,6 +13,13 @@ trait HasRoles
   {
     return $this->roles()->save(Role::whereName($role)->firstOrFail());
   }
+
+  public function removeRole($role)
+  {
+    $role = Role::where('name', $role)->firstOrFail();
+    $this->roles()->detach($role->id);
+  }
+
   /**
   * Determine if the user has the given role.
   *
@@ -26,7 +33,7 @@ trait HasRoles
     }
     return !! $role->intersect($this->roles)->count();
   }
-  
+
   /**
   * Determine if the user may perform the given permission.
   *

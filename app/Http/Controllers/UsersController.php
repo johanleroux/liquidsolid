@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-
   public function __construct()
   {
     $this->middleware('auth');
@@ -21,9 +20,14 @@ class UsersController extends Controller
   *
   * @return \Illuminate\Http\Response
   */
-  public function index()
+  public function index(Request $request)
   {
+    if(!Auth::user()->hasRole('admin'))
     abort(404);
+
+    $users = User::paginate(25);
+
+    return view('user.index', compact('users'));
   }
 
   /**
@@ -94,17 +98,17 @@ class UsersController extends Controller
   public function update(Request $request)
   {
     $this->validate($request, [
-      'name'    => 'required|string',
-      'email'   => 'required|email|unique:users,email,' . Auth::user()->id,
-      'company' => 'string',
-      'street'  => 'string',
+    'name'    => 'required|string',
+    'email'   => 'required|email|unique:users,email,' . Auth::user()->id,
+    'company' => 'string',
+    'street'  => 'string',
     ]);
 
     Auth::user()->update([
-      'name'    => $request->name,
-      'email'   => $request->email,
-      'company' => $request->company,
-      'street'  => $request->street
+    'name'    => $request->name,
+    'email'   => $request->email,
+    'company' => $request->company,
+    'street'  => $request->street
     ]);
 
     notify()->flash('Profile successfully updated.', 'success');
@@ -130,23 +134,40 @@ class UsersController extends Controller
   public function updatePassword(Request $request)
   {
     $this->validate($request, [
-      'password_old'          => 'required',
-      'password'              => 'required|different:password_old|confirmed',
-      'password_confirmation' => 'required',
+    'password_old'          => 'required',
+    'password'              => 'required|different:password_old|confirmed',
+    'password_confirmation' => 'required',
     ]);
 
     if(!Hash::check($request->password_old, Auth::user()->password))
     {
       return redirect()->back()
-              ->withInput()
-              ->withErrors(array('password_old' => 'Old password is invalid!')); // will return only the errors
+      ->withInput()
+      ->withErrors(array('password_old' => 'Old password is invalid!')); // will return only the errors
     }
 
     Auth::user()->update([
-      'password' => Hash::make($request->password)
+    'password' => Hash::make($request->password)
     ]);
 
     notify()->flash('Password successfully changed.', 'success');
     return redirect()->action('UsersController@editPassword');
+  }
+
+  public function toggleRole($user_id, $role)
+  {
+    abort_unless(Auth::user()->hasRole('admin'), 402);
+    $user = User::where('id', $user_id)->firstOrFail();
+
+    if($user->hasRole($role))
+    {
+      $user->removeRole($role);
+      notify()->flash($user->name . ' has been removed from '. $role, 'success');
+    }else
+    {
+      $user->assignRole($role);
+      notify()->flash($user->name . ' has been assigned to '. $role, 'success');
+    }
+    return redirect()->back();
   }
 }

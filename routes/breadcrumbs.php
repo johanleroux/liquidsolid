@@ -76,3 +76,21 @@ Breadcrumbs::register('shopping_payment', function($breadcrumbs) {
   $breadcrumbs->parent('shopping_cart');
   $breadcrumbs->push('Payment Method', action('OrdersController@payment'));
 });
+
+// Home > Breeder Request
+Breadcrumbs::register('breeder_request', function($breadcrumbs) {
+  $breadcrumbs->parent('home');
+  $breadcrumbs->push('Breeder Request', action('BreederRequestsController@index'));
+});
+
+// Home > Breeder Request > Create
+Breadcrumbs::register('breeder_request_create', function($breadcrumbs) {
+  $breadcrumbs->parent('breeder_request');
+  $breadcrumbs->push('Create', action('BreederRequestsController@create'));
+});
+
+// Home > Breeder Request > Show
+Breadcrumbs::register('breeder_request_show', function($breadcrumbs, $request) {
+  $breadcrumbs->parent('breeder_request');
+  $breadcrumbs->push('Review Request', action('BreederRequestsController@show', $request));
+});

@@ -16,8 +16,11 @@ Route::resource('/messages', 'MessagesController');
 Route::get('/user/change_password', 'UsersController@editPassword');
 Route::get('/user/orders', 'UsersController@orders');
 Route::get('/user/sales', 'UsersController@sales');
+Route::get('/user/{user}/toggle/{role}', 'UsersController@toggleRole');
 Route::post('/user/change_password', 'UsersController@updatePassword');
-Route::resource('/user', 'UsersController', ['only' => ['show', 'edit', 'update', 'destroy']]);
+Route::resource('/user', 'UsersController');
+Route::get('/breeder/{request}/review/{choice}', 'BreederRequestsController@review');
+Route::resource('/breeder', 'BreederRequestsController');
 
 Route::get('/cart', 'CartsController@show');
 Route::post('/cart', 'CartsController@update');

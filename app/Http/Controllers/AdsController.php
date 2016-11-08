@@ -60,6 +60,7 @@ class AdsController extends Controller
     'location'    => 'required|string',
     'description' => 'required|string',
     'price'       => 'required|numeric',
+    'image.1'     => 'required',
     'image.*'     => 'image',
     ]);
 
