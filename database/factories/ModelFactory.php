@@ -22,7 +22,7 @@ $factory->define(App\Models\Breed::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Ad::class, function (Faker\Generator $faker) {
   return [
     'user_id' => $faker->numberBetween(1, 3),
-    'breed_id' => $faker->numberBetween(1, 50),
+    'breed_id' => $faker->numberBetween(1, 20),
 
     'title' => $faker->sentence(3),
     'location' => $faker->address,

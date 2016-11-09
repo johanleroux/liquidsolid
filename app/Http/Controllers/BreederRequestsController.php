@@ -61,7 +61,7 @@ class BreederRequestsController extends Controller
     'name'     => 'required|string',
     'location' => 'required|string',
     'notes'    => 'string',
-    'file.1'   => 'required',
+    'file.0'   => 'required',
     ]);
 
     $breeder_request = Auth::user()->breeder_requests()->create($request->only(['name', 'location', 'notes']));

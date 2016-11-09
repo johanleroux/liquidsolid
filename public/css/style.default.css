@@ -338,7 +338,7 @@ h1 {
   top: 0;
 }
 .ribbon.new {
-  top: 0px;
+  top: -20px;
 }
 .ribbon.new .theribbon {
   background-color: #5bc0de;
@@ -1684,7 +1684,7 @@ address {
 }
 
 .companyinfo h2  span{
-  color:#FE980F;
+  color:#555;
 }
 
 .companyinfo p {

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+  use SoftDeletes;
 
   /**
   * The table associated with the model.
@@ -21,6 +23,13 @@ class Order extends Model
    */
   protected $fillable = ['seller_id', 'payment'];
 
+  /**
+  * The attributes that should be mutated to dates.
+  *
+  * @var array
+  */
+  protected $dates = ['deleted_at'];
+
   public function user()
   {
     return $this->belongsTo('App\Models\User');
@@ -28,7 +37,7 @@ class Order extends Model
 
   public function order_details()
   {
-    return $this->hasMany('App\Models\OrderDetail');
+    return $this->hasMany('App\Models\OrderDetail')->withTrashed();
   }
 
   public function getTotal()
@@ -52,5 +61,18 @@ class Order extends Model
   public function getCommision()
   {
     return $this->getTotal() - ($this->getTotal() * 100 / 110);
+  }
+
+/**
+ * Order order model to sort by highest quantity
+ * @param  $query
+ * @return
+ */
+  public function scopeOrderByQuantity($query)
+  {
+    $query->leftJoin('order_details', 'order_details.order_id', '=', 'orders.id')
+    ->selectRaw('orders.*, sum(order_details.quantity) as order_total')
+    ->groupBy('orders.id', 'orders.user_id', 'orders.seller_id', 'orders.payment', 'orders.buyer_approved_at', 'orders.seller_approved_at', 'orders.created_at', 'orders.updated_at', 'orders.deleted_at')
+    ->orderBy('order_total', 'desc');
   }
 }

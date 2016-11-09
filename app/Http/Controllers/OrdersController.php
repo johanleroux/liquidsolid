@@ -75,6 +75,10 @@ class OrdersController extends Controller
     $order = Auth::user()->orders()->create(['seller_id' => $seller_id, 'payment' => $cart->payment]);
     foreach($cart->items as $item)
     {
+      $nQuantity = $item->ad->quantity - $item->quantity;
+      if($nQuantity <= 0)
+      $item->ad->delete();
+      else
       $item->ad->update(['quantity' => $item->ad->quantity - $item->quantity]);
 
       $order->order_details()->create([

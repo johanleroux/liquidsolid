@@ -18,7 +18,7 @@
       <div class="col-md-9">
         <div class="box">
           <h1>Order #{{ $order->id }}</h1>
-          <p class="lead">Order #{{ $order->id }} was placed on <strong>{{ $order->created_at }}</strong> by {{ $order->getBuyer()->name }} and is currently <strong>@if($status) completed @else pending @endif</strong>.</p>
+          <p class="lead"><b>Order #{{ $order->id }}</b> was placed on <strong>{{ $order->created_at }}</strong> by <b>{{ $order->getBuyer()->name }}</b> using <b>{{ $order->payment }}</b> as payment and is currently <strong>@if($status) completed @else pending @endif</strong>.</p>
           <hr>
           <div class="table-responsive">
             <table class="table">

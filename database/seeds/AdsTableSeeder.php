@@ -12,12 +12,10 @@ class AdsTableSeeder extends Seeder
   */
   public function run()
   {
-    factory(Ad::class, 15)->create()->each(function($u) {
+    factory(Ad::class, 50)->create()->each(function($u) {
       for($i = 0; $i < 1; $i++)
       {
-        $file = storage_path('app/public') . '/dummy1.jpg';
-
-        //$file = Storage::get($url);
+        $file = storage_path('app/public') . '/dummy'.rand(1,9).'.jpg';
 
         $unique = md5(rand());
         $u->addMediaFromUrl($file)

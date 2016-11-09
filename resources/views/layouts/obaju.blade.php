@@ -104,7 +104,7 @@
         <div class="row">
           <div class="col-md-3 col-sm-6">
             <div class="companyinfo">
-              <h2><span>liquid</span>solid</h2>
+              <h2><a href="{{ url('/')}}">liquid<span>solid</span></a></h2>
               <p>Plasma gas is for noobs.</p>
             </div>
           </div>

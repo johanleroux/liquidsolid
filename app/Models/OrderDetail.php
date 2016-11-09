@@ -37,7 +37,7 @@ class OrderDetail extends Model
 
   public function ad()
   {
-    return $this->belongsTo('App\Models\Ad');
+    return $this->belongsTo('App\Models\Ad')->withTrashed();
   }
 
   public function getTotal()

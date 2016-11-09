@@ -28,14 +28,18 @@ class ReportsController extends Controller
 
     $data['num_users'] = User::count();
     $data['num_breeds'] = Breed::count();
+
     $data['num_breeders'] = DB::table('role_user')->where('role_id', 1)->count();
     $data['num_moderator'] = DB::table('role_user')->where('role_id', 2)->count();
     $data['num_admin'] = DB::table('role_user')->where('role_id', 3)->count();
+
     $data['num_ads_overall'] = Ad::withTrashed()->count();
     $data['num_ads_active'] = Ad::count();
 
     $weekBack = Carbon::today()->subWeek();
-    $data['orders'] = OrderDetail::where('created_at', '>=', $weekBack)->orderBy('quantity', 'desc')->take(5)->get();
+    $data['orders'] = Order::orderByQuantity()->take(5)->get();
+
+    $data['orders_week'] = Order::where('created_at', '>=', $weekBack)->get();
 
     return view('report.index', compact('data'));
   }

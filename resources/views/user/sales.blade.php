@@ -27,6 +27,7 @@
                   <tr>
                     <th>Order #</th>
                     <th>Date</th>
+                    <th>Payment</th>
                     <th>Total</th>
                     <th>Action</th>
                   </tr>
@@ -36,6 +37,7 @@
                     <tr>
                       <th>{{ $order->id }}</th>
                       <td>{{ $order->created_at }}</td>
+                      <td>{{ $order->payment }}</td>
                       <td>R {{ number_format($order->getTotal(), 2) }}</td>
                       <td>
                         <a href="{{ action('OrdersController@show', $order) }}" class="btn btn-primary btn-sm">View</a>

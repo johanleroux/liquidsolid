@@ -15,12 +15,11 @@ class OrdersTableSeeder extends Seeder
   */
   public function run()
   {
-    $users = User::take(5);
+    $users = User::take(25)->get();
 
     $users->each(function($u) {
       $date = new Carbon();
-      $r = rand(1, 5);
-      $date->subDays($r);
+      $date->subDays(rand(1, 14));
       $order = $u->orders()->create([
         'seller_id' => rand(1,3),
         'payment' => 'card',
@@ -30,7 +29,7 @@ class OrdersTableSeeder extends Seeder
 
       $ads = Ad::where('user_id', $order->seller_id)->get();
 
-      for($i = 0; $i < $r; $i++)
+      for($i = 0; $i < rand(1, 10); $i++)
       {
         $ad = $ads->random();
         $order->order_details()->create([

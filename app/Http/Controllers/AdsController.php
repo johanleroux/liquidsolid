@@ -67,8 +67,8 @@ class AdsController extends Controller
     'location'    => 'required|string',
     'description' => 'required|string',
     'price'       => 'required|numeric',
-    'quantity'    => 'required|numeric',
-    'image.1'     => 'required',
+    'quantity'    => 'required|numeric|min:1',
+    'image.0'     => 'required',
     'image.*'     => 'image',
     ]);
 
@@ -130,7 +130,7 @@ class AdsController extends Controller
     'location'    => 'required|string',
     'description' => 'required|string',
     'price'       => 'required|numeric',
-    'quantity'    => 'required|numeric',
+    'quantity'    => 'required|numeric|min:1',
     ]);
 
     $ad->update($request->only(['breed_id', 'title', 'quantity', 'location', 'description', 'price']));
