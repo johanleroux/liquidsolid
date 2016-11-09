@@ -72,9 +72,11 @@ class OrdersController extends Controller
     $seller_id = $cart->items->first();
     $seller_id = $seller_id->ad->user_id;
 
-    $order = Auth::user()->orders()->create(['seller_id' => $seller_id]);
+    $order = Auth::user()->orders()->create(['seller_id' => $seller_id, 'payment' => $cart->payment]);
     foreach($cart->items as $item)
     {
+      $item->ad->update(['quantity' => $item->ad->quantity - $item->quantity]);
+
       $order->order_details()->create([
       'ad_id'    => $item->ad_id,
       'quantity' => $item->quantity,

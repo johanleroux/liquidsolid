@@ -41,9 +41,7 @@
                         <a href="{{ action('AdsController@show', $ad) }}" class="btn btn-primary btn-sm">View</a>
                         @if(Auth::user()->id == $user->id)
                           <a href="{{ action('AdsController@edit', $ad) }}" class="btn btn-success btn-sm">Edit</a>
-
-                          <!-- TODO: Fix delete -->
-                          <a href="{{ action('AdsController@destroy', $ad) }}" class="btn btn-danger btn-sm">Delete</a>
+                          {!! Form::open(['method'=>'delete','action'=>['AdsController@destroy',$ad], 'style' => 'display:inline']) !!}<button type="submit" class="btn btn-danger btn-sm">Delete</button>{!! Form::close() !!}
                         @endif
                       </td>
                     </tr>

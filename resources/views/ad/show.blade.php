@@ -27,21 +27,23 @@
             <div id="mainImage">
               <img src="{{ $ad->getMedia()[0]->getUrl('thumb') }}" alt="" class="img-responsive">
             </div>
-            @php
-            $current = \Carbon\Carbon::now();
-            @endphp
-            @if($current->diffInDays($ad->created_at) <= 7)
-              <div class="ribbon new">
-                <div class="theribbon">NEW</div>
-                <div class="ribbon-background"></div>
-              </div>
-            @endif
           </div>
           <div class="col-sm-6">
             <div class="box">
+              @php
+              $current = \Carbon\Carbon::now();
+              @endphp
+              @if($current->diffInDays($ad->created_at) <= 7)
+                <div class="ribbon new">
+                  <div class="theribbon">NEW</div>
+                  <div class="ribbon-background"></div>
+                </div>
+              @endif
               <h1 class="text-center">{{ $ad->title }}</h1>
-              <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to see description, and contact information</a>
+              <p class="goToDescription">
+                <a href="#details" class="scroll-to">Scroll to see description, and contact information</a><br>
               </p>
+              <p class="text-center"><b>Quantity:</b> {{ $ad->quantity }}</p>
               <p class="price">R {{ number_format($ad->price, 2) }}</p>
               <p class="text-center buttons">
                 <a href="{{ action('CartsController@add', $ad) }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a>

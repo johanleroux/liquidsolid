@@ -37,6 +37,15 @@
     </div>
 
     <div class="form-group">
+      {{ Form::number('quantity', null, ['class' => 'form-control', 'placeholder' => 'Quantity']) }}
+      @if ($errors->has('quantity'))
+        <span class="help-block">
+          <strong>{{ $errors->first('quantity') }}</strong>
+        </span>
+      @endif
+    </div>
+
+    <div class="form-group">
       {{ Form::file('image[]', ['class' => 'form-control', 'multiple' => true]) }}
       @foreach ($errors->get('image.*') as $message)
         <span class="help-block">

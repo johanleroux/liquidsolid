@@ -303,7 +303,7 @@ h1 {
 .ribbon {
   position: absolute;
   top: 50px;
-  padding-left: 51px;
+  padding-left: 30px;
   z-index: 20;
 }
 .ribbon .ribbon-background {
@@ -338,7 +338,7 @@ h1 {
   top: 0;
 }
 .ribbon.new {
-  top: 50px;
+  top: 0px;
 }
 .ribbon.new .theribbon {
   background-color: #5bc0de;

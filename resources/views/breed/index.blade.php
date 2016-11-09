@@ -30,11 +30,11 @@
           @forelse($breeds_sorted as $breed)
             <div class="col-md-4 col-sm-6">
               <div class="product">
-                <a href="{{ action('AdsController@show', ['breed_id' => $breed->id]) }}">
+                <a href="{{ action('AdsController@index', ['breed_id' => $breed->id]) }}">
                   <img src="http://placehold.it/450x600" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                  <h3><a href="{{ action('AdsController@show', ['breed_id' => $breed->id]) }}">{{ $breed->name }}</a></h3>
+                  <h3><a href="{{ action('AdsController@index', ['breed_id' => $breed->id]) }}">{{ $breed->name }}</a></h3>
                 </div>
                 <!-- /.text -->
               </div>

@@ -21,12 +21,13 @@ $factory->define(App\Models\Breed::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\Ad::class, function (Faker\Generator $faker) {
   return [
-    'user_id' => $faker->numberBetween(1, 2),
+    'user_id' => $faker->numberBetween(1, 3),
     'breed_id' => $faker->numberBetween(1, 50),
 
     'title' => $faker->sentence(3),
     'location' => $faker->address,
     'description' => $faker->paragraph,
+    'quantity' => $faker->numberBetween(1, 10),
 
     'price' => $faker->randomFloat(2, 1500, 25000)
   ];

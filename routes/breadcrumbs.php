@@ -41,6 +41,12 @@ Breadcrumbs::register('message_show', function($breadcrumbs, $thread) {
   $breadcrumbs->push($thread->subject, action('MessagesController@show', $thread->id));
 });
 
+// User
+Breadcrumbs::register('user_index', function($breadcrumbs) {
+  $breadcrumbs->parent('home');
+  $breadcrumbs->push('Manage Users', action('UsersController@index'));
+});
+
 // Home > Account
 Breadcrumbs::register('account_show', function($breadcrumbs, $user) {
   $breadcrumbs->parent('home');
@@ -93,4 +99,10 @@ Breadcrumbs::register('breeder_request_create', function($breadcrumbs) {
 Breadcrumbs::register('breeder_request_show', function($breadcrumbs, $request) {
   $breadcrumbs->parent('breeder_request');
   $breadcrumbs->push('Review Request', action('BreederRequestsController@show', $request));
+});
+
+// Home > Reports
+Breadcrumbs::register('reports_index', function($breadcrumbs) {
+  $breadcrumbs->parent('home');
+  $breadcrumbs->push('Reports', action('ReportsController@index'));
 });

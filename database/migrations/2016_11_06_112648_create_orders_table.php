@@ -18,12 +18,14 @@ class CreateOrdersTable extends Migration
       $table->integer('user_id')->unsigned();
       $table->integer('seller_id')->unsigned();
 
+      $table->string('payment')->nullable();
+
       $table->dateTime('buyer_approved_at')->nullable();
       $table->dateTime('seller_approved_at')->nullable();
 
       $table->foreign('user_id')->references('id')->on('users');
       $table->foreign('seller_id')->references('id')->on('users');
-      
+
       $table->timestamps();
       $table->softDeletes();
     });

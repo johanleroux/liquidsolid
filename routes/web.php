@@ -32,3 +32,5 @@ Route::resource('/order', 'OrdersController');
 Route::get('/cart/payment', 'OrdersController@payment');
 Route::post('/cart/review', 'OrdersController@review');
 Route::get('/cart/checkout', 'OrdersController@checkout');
+
+Route::get('/reports', 'ReportsController@index');

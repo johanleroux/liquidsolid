@@ -26,12 +26,19 @@ class AdsController extends Controller
   public function index(Request $request)
   {
     $breed_id = $request->query('breed_id');
+    $order = $request->query('order');
+    $orderBy = $request->query('orderBy');
 
-    $ads = Ad::where('breed_id', 'like', '%'.$breed_id.'%')->orderBy('created_at', 'desc')->paginate(15);
+    $order = $order ?? 'created_at';
+    $orderBy = $orderBy ?? 'desc';
+
+    $ads = Ad::where('breed_id', 'like', '%'.$breed_id.'%')->orderBy($order, $orderBy)->paginate(15);
+
+    $breed = Breed::where('id', $breed_id)->first();
     $breeds = Breed::orderByAds()->take(5)->get();
 
     $ads->setPath('ad?breed_id='.$breed_id);
-    return view('ad.index', compact('ads', 'breeds'));
+    return view('ad.index', compact('ads', 'breeds', 'breed'));
   }
 
   /**
@@ -60,11 +67,12 @@ class AdsController extends Controller
     'location'    => 'required|string',
     'description' => 'required|string',
     'price'       => 'required|numeric',
+    'quantity'    => 'required|numeric',
     'image.1'     => 'required',
     'image.*'     => 'image',
     ]);
 
-    $ad = Auth::user()->ads()->create($request->only(['breed_id', 'title', 'location', 'description', 'price']));
+    $ad = Auth::user()->ads()->create($request->only(['breed_id', 'quantity', 'title', 'location', 'description', 'price']));
 
     foreach($request->allFiles()['image'] as $image)
     {
@@ -122,9 +130,10 @@ class AdsController extends Controller
     'location'    => 'required|string',
     'description' => 'required|string',
     'price'       => 'required|numeric',
+    'quantity'    => 'required|numeric',
     ]);
 
-    $ad->update($request->only(['breed_id', 'title', 'location', 'description', 'price']));
+    $ad->update($request->only(['breed_id', 'title', 'quantity', 'location', 'description', 'price']));
 
     notify()->flash('Ad '. $ad->id .' successfully updated.', 'success');
     return redirect()->action('AdsController@show', $ad);

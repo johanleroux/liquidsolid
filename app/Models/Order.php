@@ -19,7 +19,7 @@ class Order extends Model
    *
    * @var array
    */
-  protected $fillable = ['seller_id'];
+  protected $fillable = ['seller_id', 'payment'];
 
   public function user()
   {

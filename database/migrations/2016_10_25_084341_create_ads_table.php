@@ -23,6 +23,7 @@ class CreateAdsTable extends Migration
       $table->text('description');
 
       $table->double('price', 10, 2);
+      $table->integer('quantity');
 
       $table->foreign('user_id')->references('id')->on('users');
       $table->foreign('breed_id')->references('id')->on('breeds');

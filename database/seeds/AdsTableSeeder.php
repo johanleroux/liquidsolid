@@ -15,10 +15,12 @@ class AdsTableSeeder extends Seeder
     factory(Ad::class, 15)->create()->each(function($u) {
       for($i = 0; $i < 1; $i++)
       {
-        $url = 'http://liquidsolid.app/dummy/dummy'.rand(1,9).'.jpg';
+        $file = storage_path('app/public') . '/dummy1.jpg';
+
+        //$file = Storage::get($url);
 
         $unique = md5(rand());
-        $u->addMediaFromUrl($url)
+        $u->addMediaFromUrl($file)
         ->usingName($unique)
         ->usingFileName($unique . '.jpg')
         ->toCollection('images');

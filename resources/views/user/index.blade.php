@@ -3,7 +3,7 @@
   @section('content')
     <div class="container">
       <div class="col-md-12">
-        {!! Breadcrumbs::render('message_index') !!}
+        {!! Breadcrumbs::render('user_index') !!}
       </div>
       <div class="col-md-12">
         <div class="box">

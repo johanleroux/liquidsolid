@@ -32,7 +32,7 @@
                         <a href="{{ action('AdsController@show', $item->ad) }}">{{ $item->ad->title }}</a>
                       </td>
                       <td>
-                        {{ Form::number('item['.$loop->iteration.'][quantity]', $item->quantity, ['class' => 'form-control', 'min' => 1, 'max' => 5]) }}
+                        {{ Form::number('item['.$loop->iteration.'][quantity]', $item->quantity, ['class' => 'form-control', 'min' => 1, 'max' => $item->ad->quantity]) }}
                       </td>
                       <td>R {{ number_format($item->ad->price, 2) }}</td>
                       <td>R {{ number_format($item->ad->price * $item->quantity, 2) }}</td>

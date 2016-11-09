@@ -23,7 +23,7 @@ class Ad extends Model implements HasMediaConversions
   *
   * @var array
   */
-  protected $fillable = ['breed_id', 'title', 'location', 'description', 'price'];
+  protected $fillable = ['breed_id', 'quantity', 'title', 'location', 'description', 'price'];
 
   /**
   * The attributes that should be mutated to dates.
