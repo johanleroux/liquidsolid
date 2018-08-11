@@ -1,27 +1,48 @@
-# Laravel PHP Framework
+# LiquidSolid
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+LiquidSolid is a University project based on Laravel which allows users to post ads online for animal sales. Given the ability to customise ads and is fully moderated by admins.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Requirements
+ - PHP 7.0
+ - Nginx
+ - MySQL 5.6
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## Installation
+Fastest way to install and get requirements up and running is using [Laravel Homestead](https://laravel.com/docs/homestead).
 
-## Official Documentation
+Clone into Homestead directory.
+```
+git clone https://github.com/johanleroux/liquidsolid.git
+```
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Set working directory to LiquidSolid
 
-## Contributing
+Copy over environment file and update details to your environment.
+```
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+Update dependencies
+```
+composer update
+```
 
-## Security Vulnerabilities
+Set Application Key
+```
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+Migrate DB and Seed Initial Data
+```
+php artisan migrate --seed
+```
+
+## Usage
+Details username and password is set
+```
+admin@example.com
+secret
+```
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The MIT License (MIT). Please see [License File](license.md) for more information.

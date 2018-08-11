@@ -15,7 +15,7 @@ class AdsTableSeeder extends Seeder
     factory(Ad::class, 50)->create()->each(function($u) {
       for($i = 0; $i < 1; $i++)
       {
-        $file = storage_path('app/public') . '/dummy'.rand(1,9).'.jpg';
+        $file = storage_path('app/public') . '/dummy.png';
 
         $unique = md5(rand());
         $u->addMediaFromUrl($file)
